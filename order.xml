@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE order[
+<!ELEMENT order (meals)>
+<!ELEMENT meals (meal+)>
+<!ELEMENT meal (#PCDATA)>
+<!ATTLIST meal id ID #REQUIRED value CDATA #REQUIRED>
+]>
+<?xml-stylesheet type="text/xsl" href="order.xsl"?>
+<order>
+    <meals>
+      <meal>
+       <mname>牛肉披薩</mname>
+        <mprice>200</mprice>
+      </meal>
+      <meal>
+        <mname>披薩</mname>
+        <mprice>200</mprice>
+      </meal>
+      <meal>
+        <mname>原味披薩</mname>
+        <mprice>200</mprice>
+      </meal>
+    </meals>
+</order>

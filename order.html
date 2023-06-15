@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+  <title>訂單摘要</title>
+</head>
+<style>
+  body {
+      background-image: url("pizz.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+</style>
+<body>
+  <h1>訂單摘要</h1>
+  
+  <div id="orderSummary"></div>
+
+  <button id="saveButton">儲存</button>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var name = urlParams.get("name");
+      var phone = urlParams.get("phone");
+      var meals = urlParams.get("meals").split(",");
+
+      // 顯示訂單摘要
+      var orderSummary = document.createElement("div");
+      orderSummary.innerHTML = "<h2>訂單摘要：</h2>" +
+        "<p>名字：" + name + "</p>" +
+        "<p>電話號碼：" + phone + "</p>" +
+        "<p>已選餐點：</p><ul>";
+
+      meals.forEach(function(meal) {
+        orderSummary.innerHTML += "<li>" + meal + "</li>";
+      });
+
+      orderSummary.innerHTML += "</ul>";
+      document.getElementById("orderSummary").appendChild(orderSummary);
+
+      // 儲存按鈕點擊事件處理函式
+      document.getElementById("saveButton").addEventListener("click", function() {
+        var orderData = {
+          "name": name,
+          "phone": phone,
+          "meals": meals
+        };
+
+        var jsonData = JSON.stringify(orderData);
+        var blob = new Blob([jsonData], {type: "application/json"});
+        var url = URL.createObjectURL(blob);
+        
+        // 這個部分是下載，幫我改成存到伺服器後台(大概是G3的位置)
+        var downloadLink = document.createElement("a");
+        downloadLink.href = url;
+        downloadLink.download = "order.json";
+        downloadLink.click();
+
+        // 釋放 URL 物件
+        URL.revokeObjectURL(url);
+      });
+    });
+  </script>
+</body>
+</html>
